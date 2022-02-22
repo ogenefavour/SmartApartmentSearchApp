@@ -15,11 +15,9 @@ namespace Smart.Apartment.Application.Features.Markets.Query.GetMarketList
     public class GetMarketListQueryHandler : IRequestHandler<GetMarketListQuery, List<MarketListVm>>
     {
         private readonly ISearchService _searchService;
-        //private readonly IMapper _mapper;
         public GetMarketListQueryHandler(ISearchService searchService)
         {
             _searchService = searchService;
-            //_mapper = mapper;
 
         }
         public async Task<List<MarketListVm>> Handle(GetMarketListQuery request, CancellationToken cancellationToken)

@@ -33,12 +33,8 @@ namespace Smart.Apartment.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<ICollection<SearchListContentVm>>> SearchSmartApartment([Required]string searchPhrase, string market)
+        public async Task<ActionResult<List<SearchListContentVm>>> SearchSmartApartment([Required]string searchPhrase, string market)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState.Values);
-            }
             var dtos = await _mediator.Send(new GetSearchQuery() { searchPhrase  = searchPhrase, Market = market });
             return Ok(dtos);
         }

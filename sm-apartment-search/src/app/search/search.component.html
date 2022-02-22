@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-md-12">
+		<div class="card">
+			<div class="card-body">
+        <div class="main-verification-input-wrap">
+				<h3 class="text-bold">Get Started</h3>
+				<div class="row" [formGroup] ="searchForm">
+					<div class="col-md-8">
+						<input id="searchInput" type="text" formControlName="searchInput" placeholder="Search For items" class="form-control">
+					</div>
+					<div class="col-md-4">
+						<div class="box">
+							<select class="form-control" formControlName="marketSelector" *ngIf="markets" (change)="onStateChange()" multiple>
+									  <option value="ALL">All Markets</option>
+									  <option [label]="item.market" [value]="item.market" *ngFor="let item of markets">
+									  </option>
+							</select>
+						</div>
+					</div>
+				</div>
+			<br>
+			<div *ngIf="searchContent.length > 0">
+				<div class="well search-result"  *ngFor="let item of searchContent">
+					<div class="row">
+						<a href="#">
+							<div class="col-xs-6 col-sm-3 col-md-3 col-lg-2">
+								<img class="img-responsive" [src]="item?.isManagement? 'assets/images/aplogo.jpg': 'assets/images/logoHome.jpg'" alt="">
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 title">
+								<h4>{{item?.name}}</h4>
+								<p>{{item?.market}}</p>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>	
+        </div>
+    </div>
+</div>
+

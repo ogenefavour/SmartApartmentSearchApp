@@ -10,6 +10,6 @@ namespace Smart.Apartment.Application.Contracts.Infrastructure
     public interface ISearchService
     {
         Task<List<MarketListVm>> GetMarketList();
-        Task<ICollection<SearchListContentVm>> SearchSmartAparment(string searchPhrase, string market);
+        Task<List<SearchListContentVm>> SearchSmartAparment(string searchPhrase, string market);
     }
 }

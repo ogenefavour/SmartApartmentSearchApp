@@ -15,19 +15,37 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{2B96E2C5-0115-45FF-8D7F-C1BB235E5E7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart.Apartment.Api", "Smart.Apartment.Api\Smart.Apartment.Api.csproj", "{D722DF66-8AC5-48CB-872A-F2A315FC9BF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smart.Apartment.Api", "Smart.Apartment.Api\Smart.Apartment.Api.csproj", "{D722DF66-8AC5-48CB-872A-F2A315FC9BF4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WorkerService", "WorkerService", "{482E88C7-38E9-42F1-99BC-DE3B8E867EDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart.Apartment.Application", "Smart.Apartment.Application\Smart.Apartment.Application.csproj", "{022E9CAC-757C-4B60-A9A4-5E22120367DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smart.Apartment.Application", "Smart.Apartment.Application\Smart.Apartment.Application.csproj", "{022E9CAC-757C-4B60-A9A4-5E22120367DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart.Apartment.Infrastructure", "Smart.Apartment.Infrastructure\Smart.Apartment.Infrastructure.csproj", "{8C843359-8214-4C57-9986-E40AEA9DEC81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smart.Apartment.Infrastructure", "Smart.Apartment.Infrastructure\Smart.Apartment.Infrastructure.csproj", "{8C843359-8214-4C57-9986-E40AEA9DEC81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart.Apartment.UploadService", "Smart.Apartment.UploadService\Smart.Apartment.UploadService.csproj", "{08884BFC-2954-4404-BE98-3B26F64347B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smart.Apartment.UploadService", "Smart.Apartment.UploadService\Smart.Apartment.UploadService.csproj", "{08884BFC-2954-4404-BE98-3B26F64347B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart.Apartment.Web", "Smart.Apartment.Web\Smart.Apartment.Web.csproj", "{428E534E-4F16-465A-914F-0FB310C6A474}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smart.Apartment.UnitTests", "Smart.Apartment.UnitTests\Smart.Apartment.UnitTests.csproj", "{72CF54CB-B888-4B19-8992-122784AE0B85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart.Apartment.UnitTests", "Smart.Apartment.UnitTests\Smart.Apartment.UnitTests.csproj", "{72CF54CB-B888-4B19-8992-122784AE0B85}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "sm-apartment-search", "sm-apartment-search\", "{1B788549-B582-4983-97EC-A7EBF62425D0}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_52534"
+		Debug.AspNetCompiler.PhysicalPath = "sm-apartment-search\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52534\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_52534"
+		Release.AspNetCompiler.PhysicalPath = "sm-apartment-search\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52534\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "52534"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,14 +69,14 @@ Global
 		{08884BFC-2954-4404-BE98-3B26F64347B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08884BFC-2954-4404-BE98-3B26F64347B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08884BFC-2954-4404-BE98-3B26F64347B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{428E534E-4F16-465A-914F-0FB310C6A474}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{428E534E-4F16-465A-914F-0FB310C6A474}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{428E534E-4F16-465A-914F-0FB310C6A474}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{428E534E-4F16-465A-914F-0FB310C6A474}.Release|Any CPU.Build.0 = Release|Any CPU
 		{72CF54CB-B888-4B19-8992-122784AE0B85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{72CF54CB-B888-4B19-8992-122784AE0B85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72CF54CB-B888-4B19-8992-122784AE0B85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72CF54CB-B888-4B19-8992-122784AE0B85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B788549-B582-4983-97EC-A7EBF62425D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B788549-B582-4983-97EC-A7EBF62425D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B788549-B582-4983-97EC-A7EBF62425D0}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B788549-B582-4983-97EC-A7EBF62425D0}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,8 +91,8 @@ Global
 		{022E9CAC-757C-4B60-A9A4-5E22120367DD} = {C5DD86DB-C888-4C63-A2F0-CFB09A455800}
 		{8C843359-8214-4C57-9986-E40AEA9DEC81} = {80755201-0B04-42F4-A05B-262211B6A3A2}
 		{08884BFC-2954-4404-BE98-3B26F64347B0} = {482E88C7-38E9-42F1-99BC-DE3B8E867EDB}
-		{428E534E-4F16-465A-914F-0FB310C6A474} = {2B96E2C5-0115-45FF-8D7F-C1BB235E5E7D}
 		{72CF54CB-B888-4B19-8992-122784AE0B85} = {095572DB-F201-4322-9068-557165F2437A}
+		{1B788549-B582-4983-97EC-A7EBF62425D0} = {2B96E2C5-0115-45FF-8D7F-C1BB235E5E7D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6445B161-9AB7-4865-B17C-30C8238794FC}

@@ -14,7 +14,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Folder Include="Features\Searches\Commands\" />
     <Folder Include="Profiles\" />
   </ItemGroup>
 

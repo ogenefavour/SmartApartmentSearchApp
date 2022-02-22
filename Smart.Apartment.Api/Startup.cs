@@ -8,6 +8,7 @@ using Nest;
 using Smart.Apartment.Api.Middleware;
 using Smart.Apartment.Application;
 using Smart.Apartment.Application.Models;
+using Smart.Apartment.Application.Models.AppSettings;
 using Smart.Apartment.Infrastructure;
 using System;
 
@@ -27,6 +28,7 @@ namespace Smart.Apartment.Api
         {
             
             services.AddControllers();
+            services.Configure<Filters>(Configuration.GetSection("Filters"));
             services.AddSingleton<IElasticClient>(sp =>
             {
                 var config = sp.GetRequiredService<IConfiguration>();

@@ -5,26 +5,27 @@ using Smart.Apartment.Application.Features.Markets.Query.GetMarketList;
 using Smart.Apartment.Application.Features.Searches.Queries;
 using Smart.Apartment.Application.Models;
 using Smart.Apartment.Application.Models.AppSettings;
+using Smart.Apartment.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Smart.Apartment.Infrastructure.Search
 {
     public class SearchService : ISearchService
     {
-        private readonly EndPoints _endPoints;
+        private readonly Filters _filter;
         private readonly IElasticClient _client;
-        public SearchService(IOptions<EndPoints> endPoints, IElasticClient client)
+        public SearchService(IOptions<Filters> filter, IElasticClient client)
         {
-            _endPoints = endPoints.Value ?? throw new ArgumentNullException(nameof(endPoints));
+            _filter = filter.Value ?? throw new ArgumentNullException(nameof(filter));
             _client = client;
         }
         public async Task<List<MarketListVm>> GetMarketList()
         {
- 
             var response = await _client.SearchAsync<ManagementModel> (s =>
                    s.Size(0)
                     .Aggregations(a =>a
@@ -42,11 +43,15 @@ namespace Smart.Apartment.Infrastructure.Search
             return marketList;
         }
 
-        public async Task<ICollection<SearchListContentVm>> SearchSmartAparment(string searchPhrase, string market)
+        public async Task<List<SearchListContentVm>> SearchSmartAparment(string searchPhrase, string market)
         {
+            searchPhrase = FilterHelper.FilterSearchString(searchPhrase, _filter.SearchFilter);
+            market = HttpUtility.UrlDecode(market);
+
             var smartSearchResponse = new List<SearchListContentVm>();
             var propertyResponse = new List<SearchListContentVm>();
             var managementResponse = new List<SearchListContentVm>();
+
             if (!string.IsNullOrEmpty(market))
             {
                 var searchManagementResponse = await _client.SearchAsync<ManagementModel>(a => a.Size(25)
@@ -55,11 +60,11 @@ namespace Smart.Apartment.Infrastructure.Search
                         .Bool(c => c
                         .Must(o => o
                             .Match(f => f
-                                .Field(f => f.Market)
-                                .Query(market)), m => m
+                                .Field(fl => fl.Name)
+                                .Query(searchPhrase)), m => m
                                     .Match(f => f
-                                        .Field(fl => fl.Name)
-                                        .Query(searchPhrase))))));
+                                        .Field(f => f.Market)
+                                            .Query(market))))));
 
 
                 var searchPropertyResponse = await _client.SearchAsync<PropertiesModel>(s => s
@@ -75,9 +80,12 @@ namespace Smart.Apartment.Infrastructure.Search
                             .Field(f => f.StreetAddress)).Query(searchPhrase)), p => p
                             .Match(m => m
                             .Field(f => f.Market)
-                            .Query(market)
-                            )))));
-                propertyResponse = searchPropertyResponse.Documents.Select(res => new SearchListContentVm()
+                                .Query(market)
+                             )
+                        )
+                    )));
+
+                propertyResponse = searchPropertyResponse?.Documents.Select(res => new SearchListContentVm()
                 {
                     Name = res.Name,
                     Market = res.Market,
@@ -85,7 +93,7 @@ namespace Smart.Apartment.Infrastructure.Search
                     IsManagement = false
                 }).ToList();
 
-                managementResponse = searchManagementResponse.Documents.Select(res => new SearchListContentVm()
+                managementResponse = searchManagementResponse?.Documents.Select(res => new SearchListContentVm()
                 {
                     Name = res.Name,
                     Market = res.Market,
@@ -97,36 +105,50 @@ namespace Smart.Apartment.Infrastructure.Search
             }
             else
             {
-                var searchResponse = await _client.SearchAsync<object>(s => s
-                        .From(0)
-                        .Query(q => q.Bool(b => b
-                            .Must(m => m
-                            .MultiMatch(mu => mu
-                                .Fields(ff => ff
-                                    .Field(Infer.Field<ManagementModel>(f => f.Name))
-                                    .Field(Infer.Field<ManagementModel>(f => f.Market))
-                                    .Field(Infer.Field<ManagementModel>(f => f.State))
-                                )
-                             ) && +q
-                            .MultiMatch(mu => mu
-                                .Fields(ff => ff
-                                    .Field(Infer.Field<PropertiesModel>(f => f.Name))
-                                    .Field(Infer.Field<PropertiesModel>(f => f.FormerName))
-                                    .Field(Infer.Field<PropertiesModel>(f => f.State))
-                                    .Field(Infer.Field<PropertiesModel>(f => f.Market))
-                                    .Field(Infer.Field<PropertiesModel>(f => f.StreetAddress))
-                                )
-                                .Query(searchPhrase))
-                                ))));
-                smartSearchResponse = searchResponse.Documents.Select(res => new SearchListContentVm()
+                var searchManagementResponse = await _client.SearchAsync<ManagementModel>(a => a.Size(25)
+                    .From(0)
+                    .Query(b => b
+                        .Bool(c => c
+                        .Must(o => o
+                            .Match(f => f
+                                .Field(fl => fl.Name)
+                                .Query(searchPhrase))))));
+
+
+                var searchPropertyResponse = await _client.SearchAsync<PropertiesModel>(s => s
+                    .Size(25)
+                    .From(0)
+                    .Query(q => q.Bool(c => c
+                        .Must(o => o
+                        .MultiMatch(f => f
+                            .Fields(f => f
+                            .Field(f => f.FormerName)
+                            .Field(f => f.State)
+                            .Field(f => f.Market)
+                            .Field(f => f.StreetAddress))
+                                .Query(searchPhrase))))));
+                propertyResponse = searchPropertyResponse?.Documents.Select(res => new SearchListContentVm()
                 {
-                    Name = (string)res.GetType().GetProperty("").GetValue(res, null),
-                    Market = (string)res.GetType().GetProperty("").GetValue(res, null),
-                    State = (string)res.GetType().GetProperty("").GetValue(res, null),
-                    IsManagement = res.GetType() == typeof(ManagementModel) ? true : false
+                    Name = res.Name,
+                    Market = res.Market,
+                    State = res.State,
+                    IsManagement = false
                 }).ToList();
+
+                managementResponse = searchManagementResponse?.Documents.Select(res => new SearchListContentVm()
+                {
+                    Name = res.Name,
+                    Market = res.Market,
+                    State = res.State,
+                    IsManagement = true
+                }).ToList();
+
+                smartSearchResponse = managementResponse.Concat(propertyResponse).ToList();
+
             }
-             
+
+            smartSearchResponse = smartSearchResponse.Count > 40  ? smartSearchResponse.Take(10).Concat(smartSearchResponse.TakeLast(15)).ToList() : smartSearchResponse;
+
             return smartSearchResponse;
         }
 

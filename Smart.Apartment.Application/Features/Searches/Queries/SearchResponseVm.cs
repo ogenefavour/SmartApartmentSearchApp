@@ -7,6 +7,6 @@ namespace Smart.Apartment.Application.Features.Searches.Queries
 {
     public class SearchResponseVm
     {
-        public ICollection<SearchListContentVm> Content { get; set; }
+        public List<SearchListContentVm> Content { get; set; }
     }
 }
